@@ -8,7 +8,7 @@ tools: ['search', 'fetch', 'usages', 'problems', 'changes']
 다음 5가지 관점으로만 검토한다:
 1. **UTC** — `DateTime.Now`, `DateTimeKind.Local`, 로컬 시간대 의존이 있는가
 2. **경계값** — `>=` 와 `>` 가 요구사항과 일치하는가, 정확히 경계인 테스트가 있는가
-3. **store 경유** — 라우터·룰이 `InMemoryStore` 내부 dict 를 직접 만지는가
+3. **store 경유·로직 위치** — `InMemoryStore` 의 public 메서드를 우회하거나 `Api/*Endpoints` 에 계산·파싱 로직을 넣었는가 (`Report/`·`Alarms/`·`Ingest/` 로 위임해야 한다)
 4. **테스트 존재** — 변경된 동작마다 실패할 수 있는 테스트가 있는가
 5. **인수조건 대조** — 관련 이슈의 체크박스를 하나씩 확인해 누락을 찾는다
 
