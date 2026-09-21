@@ -9,7 +9,11 @@ public record Device(string Id, string Name = "", string Type = "generic", strin
     public DeviceState State { get; set; } = DeviceState.IDLE;
 }
 
-public record Telemetry(string DeviceId, DateTimeOffset Ts, Dictionary<string, double> Metrics, DeviceState State = DeviceState.IDLE);
+public record Telemetry(string DeviceId, DateTimeOffset Ts, Dictionary<string, double>? Metrics, DeviceState State = DeviceState.IDLE)
+{
+    // JSON 에 metrics 가 없어도 null 대신 빈 dict — 소비자(Normalize·룰)는 non-null 로 본다.
+    public Dictionary<string, double> Metrics { get; init; } = Metrics ?? new();
+}
 
 public class Alarm
 {

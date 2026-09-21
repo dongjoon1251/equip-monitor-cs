@@ -46,7 +46,7 @@ public static class LogParser
 
     /// <summary>JSON·raw 공통: ts 는 UTC 로, metric 키는 소문자로.</summary>
     public static Telemetry Normalize(Telemetry t)
-        => t with { Ts = t.Ts.ToUniversalTime(), Metrics = t.Metrics.ToDictionary(kv => kv.Key.ToLowerInvariant(), kv => kv.Value) };
+        => t with { Ts = t.Ts.ToUniversalTime(), Metrics = (t.Metrics ?? new()).ToDictionary(kv => kv.Key.ToLowerInvariant(), kv => kv.Value) };
 
     private static DateTimeOffset ParseTs(string raw)
     {

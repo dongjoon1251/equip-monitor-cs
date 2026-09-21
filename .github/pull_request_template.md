@@ -7,6 +7,7 @@ Closes #
 ## 테스트 방법
 ```
 dotnet test
+dotnet run --project src/EquipMonitor.CheckRules -- data/samples/overheat.log
 ```
 
 ## Copilot 사용 기록 (실습용)
