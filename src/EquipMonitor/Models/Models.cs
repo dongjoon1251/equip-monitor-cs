@@ -9,10 +9,7 @@ public record Device(string Id, string Name = "", string Type = "generic", strin
     public DeviceState State { get; set; } = DeviceState.IDLE;
 }
 
-public record Telemetry(string DeviceId, DateTimeOffset Ts, Dictionary<string, double> Metrics, DeviceState State = DeviceState.IDLE)
-{
-    public Telemetry(string deviceId, DateTimeOffset ts) : this(deviceId, ts, new(), DeviceState.IDLE) { }
-}
+public record Telemetry(string DeviceId, DateTimeOffset Ts, Dictionary<string, double> Metrics, DeviceState State = DeviceState.IDLE);
 
 public class Alarm
 {
