@@ -99,8 +99,10 @@ try
         await Task.Delay(TimeSpan.FromSeconds(interval));
     }
 }
-catch (HttpRequestException)
+catch (Exception e) when (e is HttpRequestException or TaskCanceledException)
 {
+    // HttpClient.Timeout 만료는 HttpRequestException 이 아니라 TaskCanceledException(내부 TimeoutException) 으로 던져진다.
+    // Python 의 httpx.HTTPError 는 연결 실패와 타임아웃을 모두 포괄하므로 동일하게 처리한다.
     Console.Error.WriteLine($"서버에 연결할 수 없습니다 ({url}). 먼저 실행하세요: dotnet run --project src/EquipMonitor");
     return 1;
 }
