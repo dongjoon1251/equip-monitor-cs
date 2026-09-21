@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\EquipMonitor\EquipMonitor.csproj" />
+    <ProjectReference Include="..\..\src\EquipMonitor.Mcp\EquipMonitor.Mcp.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,6 +3,12 @@
     "github": {
       "type": "http",
       "url": "https://api.githubcopilot.com/mcp/"
+    },
+    "equip": {
+      "type": "stdio",
+      "command": "dotnet",
+      "args": ["run", "--project", "${workspaceFolder}/src/EquipMonitor.Mcp", "--no-build"],
+      "env": { "EQUIP_API": "http://localhost:8000" }
     }
   }
 }

@@ -21,6 +21,7 @@ app.MapGet("/health", () => new { status = "ok" });
 app.MapDevices();
 app.MapTelemetry();
 app.MapAlarms();
+app.MapReport();
 app.Run();
 
 public partial class Program { }

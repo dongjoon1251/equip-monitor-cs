@@ -17,13 +17,14 @@ dotnet run --project src/EquipMonitor.CheckRules -- data/samples/overheat.log   
 ## 구조
 ```
 src/EquipMonitor/
-  Api/       DevicesEndpoints · TelemetryEndpoints(/telemetry, /ingest) · AlarmsEndpoints
+  Api/       DevicesEndpoints · TelemetryEndpoints(/telemetry, /ingest) · AlarmsEndpoints · ReportEndpoints(/report/uptime)
   Ingest/    LogParser.cs — raw 로그 라인 + JSON → Telemetry 정규화
   Alarms/    Rules.cs(IRule, ThresholdRule, DefaultRules.All) · AlarmEngine.cs
   Report/    Uptime.cs — 상태별 체류시간 · 가동률 · DayRange
   Store/     InMemoryStore.cs
 src/EquipMonitor.Simulator/   가짜 장비 3대
 src/EquipMonitor.CheckRules/  로그 → 알람 표
+src/EquipMonitor.Mcp/         읽기 전용 MCP 서버 (stdio) — Copilot Agent 용
 scripts/     check_env.ps1 · seed.ps1(이슈 생성)
 data/samples 정상 · 과열 · 음수 로그
 ```
@@ -38,3 +39,12 @@ data/samples 정상 · 과열 · 음수 로그
 
 뒤처지면 `git checkout m3-start` … `m6-start` 로 합류.
 브랜치를 바꾼 뒤에는 `dotnet restore` 를 다시 실행하세요 (m6-start 부터 패키지가 늘어납니다).
+
+## 내부 MCP 서버 (M5)
+`src/EquipMonitor.Mcp` — 실행 중인 API 를 읽기 전용 도구 4개(`list_devices`, `get_alarms`, `get_recent_telemetry`, `get_uptime`)로 노출. `.vscode/mcp.json` 의 `equip` 항목으로 Copilot 에 연결된다 (`dotnet run … --no-build` 를 쓰므로 **먼저 `dotnet build`** 를 한 번 실행). 경로는 `${workspaceFolder}` 기준이라 OS 구분 없이 동작한다.
+```bash
+dotnet build
+dotnet run --project src/EquipMonitor                      # API 먼저 (새 터미널)
+# VS Code: Copilot Chat → Agent 모드 → 도구 목록에 equip 4개 확인
+```
+예시 프롬프트: "DEV-02 알람 보여줘", "오늘 장비별 가동률 알려줘", "DEV-01 최근 텔레메트리 5개".

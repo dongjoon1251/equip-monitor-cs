@@ -70,4 +70,24 @@ public class ApiTests : IClassFixture<WebApplicationFactory<Program>>
         Assert.Equal(["DEV-01"], list.EnumerateArray().Select(d => d.GetProperty("id").GetString()));
         Assert.Equal(HttpStatusCode.NotFound, (await _client.GetAsync("/devices/NOPE")).StatusCode);
     }
+
+    [Fact]
+    public async Task UptimeReportPerDevice()
+    {
+        await _client.PostAsJsonAsync("/telemetry", new[]
+        {
+            new { device_id = "DEV-01", ts = "2026-09-21T09:00:00Z", metrics = new { temp = 70.0 }, state = "RUN" },
+            new { device_id = "DEV-01", ts = "2026-09-21T15:00:00Z", metrics = new { temp = 70.0 }, state = "DOWN" },
+        });
+        var r = await _client.GetAsync("/report/uptime?from=2026-09-21&to=2026-09-21");
+        Assert.Equal(HttpStatusCode.OK, r.StatusCode);
+        var rows = await Json(r);
+        Assert.Equal(1, rows.GetArrayLength());
+        var row = rows[0];
+        Assert.Equal("DEV-01", row.GetProperty("device_id").GetString());
+        Assert.Equal(6 * 3600, row.GetProperty("durations_s").GetProperty("RUN").GetDouble()); // KST/UTC 어느 창에도 09:00Z~15:00Z 가 들어감
+        var ratio = row.GetProperty("uptime_ratio").GetDouble();
+        Assert.True(ratio > 0 && ratio < 1);
+        Assert.Equal(HttpStatusCode.NotFound, (await _client.GetAsync("/report/uptime?from=2026-09-21&to=2026-09-21&device_id=NOPE")).StatusCode);
+    }
 }
