@@ -1,6 +1,6 @@
 ---
 name: alarm-rule
-description: equip-monitor 에 알람 룰을 추가하거나 수정할 때 사용. rules.py 구현 → DEFAULT_RULES 등록 → 경계 테스트 → check_rules.py 검증까지의 절차와 판정 기준을 담는다. "알람", "룰", "임계치", "지속", "threshold" 요청에 적용.
+description: equip-monitor 에 알람 룰을 추가하거나 수정할 때 사용. Alarms/Rules.cs 구현 → DefaultRules.All 등록 → 경계 테스트 → CheckRules 검증까지의 절차와 판정 기준을 담는다. "알람", "룰", "임계치", "지속", "threshold" 요청에 적용.
 ---
 # 알람 룰 추가/수정 절차
 
