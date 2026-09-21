@@ -51,5 +51,5 @@ public class EngineTests
 
     [Fact]
     public void DefaultRules_Names()
-        => Assert.Equal(["temp-critical", "pressure-high"], DefaultRules.All.Select(r => r.Name));
+        => Assert.Equal(["temp-critical", "pressure-high", "temp-sustained"], DefaultRules.All.Select(r => r.Name));
 }
