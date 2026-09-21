@@ -26,7 +26,11 @@ public static class LogParser
             var key = kv.Groups[1].Value;
             var raw = kv.Groups[2].Value;
             if (key.Equals("state", StringComparison.OrdinalIgnoreCase))
-                state = Enum.Parse<DeviceState>(raw);
+                // ponytail: Enum.Parse/TryParse accept numeric strings (e.g. "0" -> RUN, "99" -> undefined) with no
+                // validation against defined names, unlike Python's DeviceState(raw). Require an exact name match.
+                state = Enum.TryParse<DeviceState>(raw, ignoreCase: false, out var s) && Enum.GetNames<DeviceState>().Contains(raw)
+                    ? s
+                    : throw new FormatException($"bad value state='{raw}' in '{line}'");
             else if (Number.IsMatch(raw))
                 metrics[key] = double.Parse(raw, CultureInfo.InvariantCulture);
             else

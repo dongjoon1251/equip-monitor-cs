@@ -34,6 +34,7 @@ public class ParserTests
     [InlineData("2026-09-21T09:00:00 DEV-01 temp=1")]          // offset 없음
     [InlineData("2026-09-21T09:00:00Z DEV-01 temp=hot")]
     [InlineData("2026-09-21T09:00:00Z DEV-01 state=FLYING")]
+    [InlineData("2026-09-21T09:00:00Z DEV-01 state=0")]
     public void ParseLine_RejectsMalformed(string line) => Assert.ThrowsAny<Exception>(() => LogParser.ParseLine(line));
 
     [Fact]
