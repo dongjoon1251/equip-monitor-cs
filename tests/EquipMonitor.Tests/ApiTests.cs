@@ -85,7 +85,7 @@ public class ApiTests : IClassFixture<WebApplicationFactory<Program>>
         Assert.Equal(1, rows.GetArrayLength());
         var row = rows[0];
         Assert.Equal("DEV-01", row.GetProperty("device_id").GetString());
-        Assert.Equal(6 * 3600, row.GetProperty("durations_s").GetProperty("RUN").GetDouble()); // KST/UTC 어느 창에도 09:00Z~15:00Z 가 들어감
+        Assert.Equal(6 * 3600, row.GetProperty("durations_s").GetProperty("RUN").GetDouble());
         var ratio = row.GetProperty("uptime_ratio").GetDouble();
         Assert.True(ratio > 0 && ratio < 1);
         Assert.Equal(HttpStatusCode.NotFound, (await _client.GetAsync("/report/uptime?from=2026-09-21&to=2026-09-21&device_id=NOPE")).StatusCode);
