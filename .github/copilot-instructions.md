@@ -8,7 +8,7 @@
 - `Report/Uptime.cs` 상태별 체류시간·가동률·`DayRange`.
 
 ## 규약
-- 모든 시각은 `DateTimeOffset`. `DateTime.Now` 금지. 쿼리 파라미터는 `TimeUtil.EnsureUtc` 로 UTC 변환.
+- 모든 시각은 DateTimeOffset(UTC). DateTime.Now·DateTimeKind.Local·TimeZoneInfo.Local 금지. 룰의 시간 판단은 텔레메트리 Ts 기준.
 - 새 알람 룰: `Alarms/Rules.cs` 에 `IRule` 구현 → `DefaultRules.All` 등록 → `tests/EquipMonitor.Tests/RulesTests.cs` 경계 테스트(없으면 새로 만든다) → `dotnet run --project src/EquipMonitor.CheckRules -- data/samples/overheat.log` 로 확인.
 - 저장소 접근은 `InMemoryStore` 의 public 메서드로만.
 - 요청/응답 모델은 `Models/Models.cs` 의 레코드를 재사용.
