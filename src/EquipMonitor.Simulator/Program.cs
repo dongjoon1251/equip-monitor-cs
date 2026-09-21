@@ -6,13 +6,15 @@ using EquipMonitor.Models;
 
 // 가짜 장비 3대. 주기적으로 POST /telemetry 하거나(--scenario), 로그 파일을 POST /ingest 로 재생한다(--replay).
 // 사용법:
-//   dotnet run --project src/EquipMonitor.Simulator -- --scenario overheat --interval 1
+//   dotnet run --project src/EquipMonitor.Simulator -- --scenario overheat --interval 1 --count 30   (--count 기본 60)
 //   dotnet run --project src/EquipMonitor.Simulator -- --replay data/samples/overheat.log
 
+const string Usage = "사용법: --scenario normal|overheat [--interval 초] [--count N] [--url http://...] | --replay <로그 파일>";
 var url = "http://localhost:8000";
 var scenario = "normal";
 string? replay = null;
 var interval = 2;
+var count = 60;
 
 for (var i = 0; i < args.Length; i++)
 {
@@ -22,6 +24,11 @@ for (var i = 0; i < args.Length; i++)
         case "--scenario": scenario = args[++i]; break;
         case "--replay": replay = args[++i]; break;
         case "--interval": interval = int.Parse(args[++i]); break;
+        case "--count": count = int.Parse(args[++i]); break;
+        default:
+            Console.Error.WriteLine($"알 수 없는 옵션: {args[i]}");
+            Console.Error.WriteLine(Usage);
+            return 2;
     }
 }
 
@@ -83,7 +90,7 @@ try
         return 0;
     }
 
-    for (var tick = 0; ; tick++)
+    for (var tick = 0; tick < count; tick++)
     {
         var items = devices.Select(d => Sample(d, tick)).ToList();
         var json = JsonSerializer.Serialize(items, jsonOptions);
@@ -98,6 +105,7 @@ try
         }
         await Task.Delay(TimeSpan.FromSeconds(interval));
     }
+    return 0;
 }
 catch (Exception e) when (e is HttpRequestException or TaskCanceledException)
 {

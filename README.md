@@ -10,7 +10,7 @@ pwsh scripts/check_env.ps1                                # 사전 과제: 모�
 dotnet test
 dotnet run --project src/EquipMonitor                      # http://localhost:8000  # 터미널을 점유함 — 이후 명령은 새 터미널에서
 dotnet run --project src/EquipMonitor.Simulator -- --replay data/samples/overheat.log
-dotnet run --project src/EquipMonitor.Simulator -- --scenario overheat --interval 1
+dotnet run --project src/EquipMonitor.Simulator -- --scenario overheat --interval 1 --count 30   # --count 기본 60
 dotnet run --project src/EquipMonitor.CheckRules -- data/samples/overheat.log   # 룰 검증 (알람 표 출력)
 ```
 
