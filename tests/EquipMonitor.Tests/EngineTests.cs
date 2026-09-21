@@ -16,6 +16,7 @@ public class EngineTests
         Assert.Null(rule.Evaluate(Tele(metrics: ("temp", 94.9)), []));
         var f = rule.Evaluate(Tele(metrics: ("temp", 95.0)), []);
         Assert.Equal(new Finding(Severity.CRITICAL, "temp=95 >= 95"), f);
+        Assert.Equal("temp=95.1235 >= 95", rule.Evaluate(Tele(metrics: ("temp", 95.123456789)), [])!.Message);
     }
 
     [Fact]

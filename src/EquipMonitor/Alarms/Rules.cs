@@ -22,7 +22,8 @@ public record ThresholdRule(string Name, string Metric, double Limit, Severity S
         return new Finding(Severity, $"{Metric}={G(value)} >= {G(Limit)}");
     }
 
-    internal static string G(double v) => v.ToString("G", CultureInfo.InvariantCulture);
+    // Python f"{v:g}" 와 동일: 유효숫자 6, 소문자 e
+    internal static string G(double v) => v.ToString("G6", CultureInfo.InvariantCulture).ToLowerInvariant();
 }
 
 public static class DefaultRules
