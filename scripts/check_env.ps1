@@ -17,6 +17,6 @@ if ($code) {
     Check "GitHub Copilot Chat 확장" ((@($ext) | ForEach-Object { "$_".ToLower() }) -contains "github.copilot-chat") "VS Code 확장 탭에서 'GitHub Copilot Chat' 설치"
 }
 if (Get-Command gh -ErrorAction SilentlyContinue) { & gh auth status 2>$null | Out-Null; Check "gh auth" ($LASTEXITCODE -eq 0) "gh auth login" }
-& dotnet build (Join-Path $PSScriptRoot "..\EquipMonitor.sln") -v q --nologo 2>$null | Out-Null
+& dotnet build (Join-Path (Split-Path $PSScriptRoot -Parent) "EquipMonitor.sln") -v q --nologo 2>$null | Out-Null
 Check "dotnet build" ($LASTEXITCODE -eq 0) "dotnet build 오류를 확인하세요"
 if ($results -contains $false) { exit 1 } else { Write-Host "모두 OK — 이 화면을 캡처해 제출하세요"; exit 0 }
