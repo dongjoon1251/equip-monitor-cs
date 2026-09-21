@@ -1,4 +1,5 @@
 ﻿# 수업 전 환경 점검. 전부 OK 면 exit 0. 사용: pwsh scripts/check_env.ps1  (Windows PowerShell 5.1 도 가능)
+# Windows PowerShell 5.1: powershell -ExecutionPolicy Bypass -File scripts\check_env.ps1
 $results = @()
 function Check($name, [bool]$ok, $hint) {
     $mark = if ($ok) { "OK  " } else { "FAIL" }
@@ -10,7 +11,7 @@ Check ".NET SDK 8+" ([bool]($sdks -match '^(8|9|1\d)\.')) ".NET 8 SDK 설치: ht
 Check "git on PATH" ([bool](Get-Command git -ErrorAction SilentlyContinue)) "Git 설치"
 Check "gh on PATH"  ([bool](Get-Command gh  -ErrorAction SilentlyContinue)) "GitHub CLI 설치: https://cli.github.com"
 $code = Get-Command code -ErrorAction SilentlyContinue
-$codeHint = if ($env:OS -ne 'Windows_NT') { "VS Code 에서 Cmd+Shift+P -> 'Shell Command: Install ''code'' command in PATH'" } else { "VS Code 설치 후 터미널 재시작" }
+$codeHint = if ($env:OS -ne 'Windows_NT') { "VS Code 에서 Cmd+Shift+P -> 'Shell Command: Install 'code' command in PATH'" } else { "VS Code 설치 후 터미널 재시작" }
 Check "code on PATH" ([bool]$code) $codeHint
 if ($code) {
     $ext = & code --list-extensions 2>$null
