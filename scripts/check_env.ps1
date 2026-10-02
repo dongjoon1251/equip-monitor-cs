@@ -15,7 +15,14 @@ $codeHint = if ($env:OS -ne 'Windows_NT') { "VS Code 에서 Cmd+Shift+P -> 'Shel
 Check "code on PATH" ([bool]$code) $codeHint
 if ($code) {
     $ext = & code --list-extensions 2>$null
-    Check "GitHub Copilot Chat 확장" ((@($ext) | ForEach-Object { "$_".ToLower() }) -contains "github.copilot-chat") "VS Code 확장 탭에서 'GitHub Copilot Chat' 설치"
+    # VS Code 1.11x 부터 Copilot Chat 은 VS Code 에 내장 -> 확장 목록에 안 나온다. 설치본의 내장 확장 폴더도 확인.
+    $codePath = $code.Source; $item = Get-Item $codePath -ErrorAction SilentlyContinue
+    if ($item -and $item.LinkType) { $codePath = if ([IO.Path]::IsPathRooted("$($item.Target)")) { "$($item.Target)" } else { Join-Path (Split-Path $codePath -Parent) "$($item.Target)" } }
+    $codeDir = Split-Path $codePath -Parent
+    $builtin = [bool](@((Join-Path (Join-Path (Join-Path $codeDir "..") "extensions") "copilot"),
+                        (Join-Path (Join-Path (Join-Path (Join-Path (Join-Path $codeDir "..") "resources") "app") "extensions") "copilot")) | Where-Object { Test-Path $_ })
+    $installed = (@($ext) | ForEach-Object { "$_".ToLower() }) -contains "github.copilot-chat"
+    Check "GitHub Copilot Chat (확장 또는 VS Code 내장)" ($installed -or $builtin) "VS Code 를 최신으로 업데이트하거나, 확장 탭에서 'GitHub Copilot Chat' 설치"
 }
 if (Get-Command gh -ErrorAction SilentlyContinue) { & gh auth status 2>$null | Out-Null; Check "gh auth" ($LASTEXITCODE -eq 0) "gh auth login" }
 & dotnet build (Join-Path (Split-Path $PSScriptRoot -Parent) "EquipMonitor.sln") -v q --nologo 2>$null | Out-Null
