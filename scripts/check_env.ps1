@@ -24,7 +24,11 @@ if ($code) {
     $installed = (@($ext) | ForEach-Object { "$_".ToLower() }) -contains "github.copilot-chat"
     Check "GitHub Copilot Chat (확장 또는 VS Code 내장)" ($installed -or $builtin) "VS Code 를 최신으로 업데이트하거나, 확장 탭에서 'GitHub Copilot Chat' 설치"
 }
-if (Get-Command gh -ErrorAction SilentlyContinue) { & gh auth status 2>$null | Out-Null; Check "gh auth" ($LASTEXITCODE -eq 0) "gh auth login" }
+# gh 로그인은 선택: 실습 이슈 생성(seed)·PR 생성에만 쓰고, 둘 다 GitHub 웹으로 대신할 수 있다 -> 실패해도 WARN.
+if (Get-Command gh -ErrorAction SilentlyContinue) {
+    & gh auth status 2>$null | Out-Null
+    if ($LASTEXITCODE -eq 0) { Write-Host "OK   gh auth" } else { Write-Host "WARN gh auth  -> (선택) gh auth login - 이슈 생성(seed)·PR 생성에 사용, 안 되면 GitHub 웹에서 직접 해도 됩니다" }
+}
 & dotnet build (Join-Path (Split-Path $PSScriptRoot -Parent) "EquipMonitor.sln") -v q --nologo 2>$null | Out-Null
 Check "dotnet build" ($LASTEXITCODE -eq 0) "dotnet build 오류를 확인하세요"
 if ($results -contains $false) { exit 1 } else { Write-Host "모두 OK — 이 화면을 캡처해 제출하세요"; exit 0 }
