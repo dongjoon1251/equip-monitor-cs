@@ -17,6 +17,24 @@ builder.Services.ConfigureHttpJsonOptions(o =>
 });
 
 var app = builder.Build();
+var apiKey = app.Configuration["EQUIP_API_KEY"]; // 환경변수 EQUIP_API_KEY 도 여기로 들어온다
+if (!string.IsNullOrEmpty(apiKey))
+{
+    // 조회(GET)만 키 검사 — 게이트웨이/시뮬레이터 수집(POST)은 그대로
+    var expected = System.Text.Encoding.UTF8.GetBytes(apiKey);
+    app.Use(async (ctx, next) =>
+    {
+        var given = System.Text.Encoding.UTF8.GetBytes(ctx.Request.Headers["X-API-Key"].ToString());
+        if (HttpMethods.IsGet(ctx.Request.Method) && ctx.Request.Path != "/health"
+            && !System.Security.Cryptography.CryptographicOperations.FixedTimeEquals(given, expected))
+        {
+            ctx.Response.StatusCode = 401;
+            await ctx.Response.WriteAsJsonAsync(new { detail = "invalid or missing X-API-Key" });
+            return;
+        }
+        await next();
+    });
+}
 app.MapGet("/health", () => new { status = "ok" });
 app.MapDevices();
 app.MapTelemetry();

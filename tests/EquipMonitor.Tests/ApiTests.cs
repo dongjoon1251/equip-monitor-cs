@@ -90,4 +90,15 @@ public class ApiTests : IClassFixture<WebApplicationFactory<Program>>
         Assert.True(ratio > 0 && ratio < 1);
         Assert.Equal(HttpStatusCode.NotFound, (await _client.GetAsync("/report/uptime?from=2026-09-21&to=2026-09-21&device_id=NOPE")).StatusCode);
     }
+
+    [Fact]
+    public async Task ApiKeyRequiredForReadsWhenConfigured()
+    {
+        await using var f = new WebApplicationFactory<Program>().WithWebHostBuilder(b => b.UseSetting("EQUIP_API_KEY", "test-key"));
+        var c = f.CreateClient();
+        Assert.Equal(HttpStatusCode.Unauthorized, (await c.GetAsync("/devices")).StatusCode);
+        c.DefaultRequestHeaders.Add("X-API-Key", "test-key");
+        Assert.Equal(HttpStatusCode.OK, (await c.GetAsync("/devices")).StatusCode);
+        Assert.Equal(HttpStatusCode.OK, (await f.CreateClient().GetAsync("/health")).StatusCode);
+    }
 }

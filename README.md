@@ -42,6 +42,8 @@ data/samples 정상 · 과열 · 음수 로그
 
 ## 내부 MCP 서버 (M5)
 `src/EquipMonitor.Mcp` — 실행 중인 API 를 읽기 전용 도구 4개(`list_devices`, `get_alarms`, `get_recent_telemetry`, `get_uptime`)로 노출. `.vscode/mcp.json` 의 `equip` 항목으로 Copilot 에 연결된다 (`dotnet run … --no-build` 를 쓰므로 **먼저 `dotnet build`** 를 한 번 실행). 경로는 `${workspaceFolder}` 기준이라 OS 구분 없이 동작한다.
+- API 키: API 를 `EQUIP_API_KEY=<키> dotnet run --project src/EquipMonitor` 로 띄우면 조회(GET)에 `X-API-Key` 헤더가 필요하다(키를 안 주면 예전처럼 열림). MCP 서버는 같은 키를 `.vscode/mcp.json` 의 `inputs` 로 입력받는다 — 키는 저장소에 적지 않는다.
+- http 방식: `EQUIP_API_KEY=<키> dotnet run --project src/EquipMonitor.Mcp --no-build -- --http` → `http://127.0.0.1:8001/mcp` (요청마다 `X-API-Key` 헤더 필요). `mcp.json` 예: `"equip-http": {"type": "http", "url": "http://127.0.0.1:8001/mcp", "headers": {"X-API-Key": "${input:equip-api-key}"}}`
 ```bash
 dotnet build
 dotnet run --project src/EquipMonitor                      # API 먼저 (새 터미널)
