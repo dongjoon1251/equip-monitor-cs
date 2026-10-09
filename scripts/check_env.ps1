@@ -7,7 +7,7 @@ function Check($name, [bool]$ok, $hint) {
     $script:results += $ok
 }
 $sdks = & dotnet --list-sdks 2>$null
-Check ".NET SDK 8+" ([bool]($sdks -match '^(8|9|1\d)\.')) ".NET 8 SDK 설치: https://dotnet.microsoft.com/download/dotnet/8.0"
+Check ".NET SDK 10+" ([bool]($sdks -match '^1\d\.')) ".NET 10 SDK 설치: https://dotnet.microsoft.com/download/dotnet/10.0"
 Check "git on PATH" ([bool](Get-Command git -ErrorAction SilentlyContinue)) "Git 설치"
 Check "gh on PATH"  ([bool](Get-Command gh  -ErrorAction SilentlyContinue)) "GitHub CLI 설치: https://cli.github.com"
 $code = Get-Command code -ErrorAction SilentlyContinue | Select-Object -First 1   # code.cmd 와 code 가 함께 잡히면 첫 번째만
