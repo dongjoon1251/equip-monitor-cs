@@ -9,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseUrls("http://localhost:8000");
 builder.Services.AddSingleton<InMemoryStore>();
 builder.Services.AddSingleton<AlarmEngine>(sp => new AlarmEngine(sp.GetRequiredService<InMemoryStore>()));
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 builder.Services.ConfigureHttpJsonOptions(o =>
 {
     o.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower;  // Python 판과 와이어 호환
@@ -17,6 +19,12 @@ builder.Services.ConfigureHttpJsonOptions(o =>
 });
 
 var app = builder.Build();
+app.UseSwagger();
+app.UseSwaggerUI(o =>  // Python 판과 같은 http://localhost:8000/docs
+{
+    o.RoutePrefix = "docs";
+    o.SwaggerEndpoint("/swagger/v1/swagger.json", "EquipMonitor v1");
+});
 var apiKey = app.Configuration["EQUIP_API_KEY"]; // 환경변수 EQUIP_API_KEY 도 여기로 들어온다
 if (!string.IsNullOrEmpty(apiKey))
 {
