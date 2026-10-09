@@ -6,7 +6,7 @@
 ```bash
 dotnet restore
 dotnet build
-pwsh scripts/check_env.ps1                                # 사전 과제: 모두 OK 캡처 (Windows: powershell -ExecutionPolicy Bypass -File scripts\check_env.ps1)
+powershell -ExecutionPolicy Bypass -File scripts\check_env.ps1   # 사전 과제: 모두 OK 캡처 (mac/Linux: pwsh scripts/check_env.ps1)
 dotnet test
 dotnet run --project src/EquipMonitor                      # http://localhost:8000  # 터미널을 점유함 — 이후 명령은 새 터미널에서
 dotnet run --project src/EquipMonitor.Simulator -- --replay data/samples/overheat.log
@@ -30,8 +30,8 @@ data/samples 정상 · 과열 · 음수 로그
 로그 라인: `2026-09-21T09:00:00Z DEV-01 state=RUN temp=82.5 pressure=1.20`
 
 ## 실습 이슈
-`pwsh scripts/seed.ps1` 로 생성 (repo 루트에서 한 번만 실행 — 재실행 시 이슈가 중복 생성됨; Windows: `powershell -ExecutionPolicy Bypass -File scripts\seed.ps1`). 본문은 `docs/issues/`.
-강사용: `pwsh scripts/seed.ps1 -WithInjection` (이슈 #4 본문은 강사용 solution repo 에만 있음 → -InjectionFile 로 경로 지정)
+`powershell -ExecutionPolicy Bypass -File scripts\seed.ps1` 로 생성 (repo 루트에서 한 번만 실행 — 재실행 시 이슈가 중복 생성됨; mac/Linux: `pwsh scripts/seed.ps1`). 본문은 `docs/issues/`.
+강사용: `powershell -ExecutionPolicy Bypass -File scripts\seed.ps1 -WithInjection` (이슈 #4 본문은 강사용 solution repo 에만 있음 → -InjectionFile 로 경로 지정)
 
 ## 체크포인트
 > **Use this template** 로 자기 repo 를 만들 때 **Include all branches** 를 반드시 체크하세요. 체크하지 않으면 아래 체크포인트 브랜치가 생기지 않습니다.

@@ -1,5 +1,5 @@
-﻿# GitHub 라벨·실습 이슈 생성 (gh CLI 필요, 한 번만 실행, repo 루트에서 실행). 사용: pwsh scripts/seed.ps1 [-WithInjection] [-InjectionFile <path>]
-# Windows PowerShell 5.1: powershell -ExecutionPolicy Bypass -File scripts\seed.ps1
+﻿# GitHub 라벨·실습 이슈 생성 (gh CLI 필요, 한 번만 실행, repo 루트에서 실행). Windows PowerShell 5.1 기준(pwsh 불필요).
+# 사용: powershell -ExecutionPolicy Bypass -File scripts\seed.ps1 [-WithInjection] [-InjectionFile <path>]   (mac/Linux: pwsh scripts/seed.ps1)
 param([switch]$WithInjection, [string]$InjectionFile = "docs/issues/04-log-format-question.md")
 $root = Join-Path $PSScriptRoot ".."
 $labels = @{ feature = "0E8A16"; bug = "D73A4A"; practice = "1D76DB"; demo = "5319E7" }
