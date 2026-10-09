@@ -63,3 +63,6 @@ sealed class ApiErrorHandler : DelegatingHandler
         return r;
     }
 }
+
+// .NET 10 웹 SDK 가 Program 을 public 으로 생성하면 테스트에서 EquipMonitor 의 Program 과 충돌하므로 internal 로 고정.
+internal partial class Program { }
