@@ -50,10 +50,10 @@ if ($code) {
         Remove-Item $outFile, $errFile -ErrorAction SilentlyContinue
     }
 }
-# gh 로그인은 선택: 실습 이슈 생성(seed)·PR 생성에만 쓰고, 둘 다 GitHub 웹으로 대신할 수 있다 -> 실패해도 WARN.
+# gh 로그인은 선택: PR 생성에만 쓰고, GitHub 웹으로 대신할 수 있다 -> 실패해도 WARN.
 if (Get-Command gh -ErrorAction SilentlyContinue) {
     & gh auth status 2>$null | Out-Null
-    if ($LASTEXITCODE -eq 0) { Write-Host "OK   gh auth" } else { Write-Host "WARN gh auth  -> (선택) gh auth login - 이슈 생성(seed)·PR 생성에 사용, 안 되면 GitHub 웹에서 직접 해도 됩니다" }
+    if ($LASTEXITCODE -eq 0) { Write-Host "OK   gh auth" } else { Write-Host "WARN gh auth  -> (선택) gh auth login - PR 생성에 사용, 안 되면 GitHub 웹에서 직접 해도 됩니다" }
 }
 & dotnet build (Join-Path (Split-Path $PSScriptRoot -Parent) "EquipMonitor.sln") -v q --nologo 2>$null | Out-Null
 Check "dotnet build" ($LASTEXITCODE -eq 0) "dotnet build 오류를 확인하세요"
