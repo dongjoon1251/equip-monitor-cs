@@ -15,7 +15,7 @@
     "equip": {
       "type": "stdio",
       "command": "dotnet",
-      "args": ["run", "--project", "${workspaceFolder}/src/EquipMonitor.Mcp", "--no-build"],
+      "args": ["run", "--project", "${workspaceFolder}/src/EquipMonitor.Mcp"],
       "env": {
         "EQUIP_API": "http://localhost:8000",
         "EQUIP_API_KEY": "${input:equip-api-key}"
