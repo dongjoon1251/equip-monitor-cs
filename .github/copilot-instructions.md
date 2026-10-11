@@ -21,6 +21,7 @@
 - 알람 관련 작업은 `src/EquipMonitor/Alarms/` 부터 읽는다. 전체 검색(#codebase)은 위치를 모를 때 한 번만.
 
 ## PR · Jira
+- Jira 작업은 `feat/<Jira 키>` 브랜치에서 구현하고(`/jira-implement`), 커밋 메시지는 `<Jira 키> feat: …` 한 줄.
 - Jira 작업에서 시작한 일은 PR 제목 맨 앞에 Jira 키를 쓴다(예: `KAN-5 feat: 알람 웹훅 알림`). 설명 `Jira:` 칸에 Jira · Confluence 링크.
 - GitHub 이슈를 닫는 PR 은 설명에 `Closes #N` 을 이슈마다 쓴다.
 - 머지는 사람이 한다. 에이전트는 PR 을 열고 리뷰 · CI 결과를 정리하는 데까지만 한다.

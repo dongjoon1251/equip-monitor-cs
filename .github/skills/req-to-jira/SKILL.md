@@ -17,10 +17,10 @@ description: 요구사항을 Confluence 요구사항 페이지로 쓰거나 기�
 4. **Jira 작업 만들기** — 유형 Task, 제목 `[요구사항] <한 줄 요약>`, 라벨 `from-confluence`. 설명은 아래 순서로 쓴다.
    - 첫 줄: Confluence 페이지 링크
    - 인수조건: 페이지의 체크박스를 그대로 옮긴다
-   - `## Copilot 작업 지시` 절: 저장소 `<owner>/<repo>` (현재 작업 폴더의 `git remote get-url origin`), 인수조건을 테스트로 먼저 고정할 것, PR 제목은 `<Jira 키> <Conventional Commits 제목>`, PR 설명에 Jira · Confluence 링크
+   - `## Copilot 작업 지시` 절(`/jira-implement` 가 읽음): 저장소 `<owner>/<repo>` (현재 작업 폴더의 `git remote get-url origin`), 인수조건을 테스트로 먼저 고정할 것, PR 제목은 `<Jira 키> <Conventional Commits 제목>`, PR 설명에 Jira · Confluence 링크
 5. **반대 방향 링크** — Confluence 페이지 맨 아래에 `Jira: <키>` 링크를 추가한다.
-6. **cloud agent 위임 지시문** — Jira 설명의 `## Copilot 작업 지시` 절을 코드 블록 하나로 출력하고, 맨 위 줄에 `Jira: <키> <URL>` 을 붙인다. 그리고 "VS Code 채팅에서 + → 하네스 **Cloud** 새 세션에 이 블록을 붙여 보내면 cloud agent 가 구현을 시작합니다(크레딧 · Actions 분 사용)" 라고 안내한다. Skill 이 직접 위임하거나 Jira 담당자를 바꾸지 않는다 — 구현을 맡길지는 사람이 정한다.
-7. **보고** — 페이지 URL · Jira 키 · URL · 인수조건 개수를 표 한 장으로 보여 주고, 그 아래에 6번의 위임 지시문 블록을 둔다.
+6. **다음 단계 안내** — 구현은 이 Skill 이 하지 않는다. 결과 끝에 "구현: `/jira-implement <Jira 키>` (feat/<Jira 키> 브랜치 · Jira 진행 중 · 테스트 먼저 · 커밋)" 한 줄을 붙인다.
+7. **보고** — 페이지 URL · Jira 키 · URL · 인수조건 개수를 표 한 장으로 보여 주고, 그 아래에 6번의 다음 단계 한 줄을 둔다.
 
 ## 규칙
 - 쓰기(페이지 생성 · Jira 생성 · 링크 추가)는 한 번에 하나씩 부르고, 승인 카드에 무엇이 들어가는지 사용자가 볼 수 있게 한다.
