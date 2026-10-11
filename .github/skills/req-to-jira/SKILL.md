@@ -19,10 +19,10 @@ description: 요구사항을 Confluence 요구사항 페이지로 쓰거나 기�
    - 인수조건: 페이지의 체크박스를 그대로 옮긴다
    - `## Copilot 작업 지시` 절: 저장소 `<owner>/<repo>` (현재 작업 폴더의 `git remote get-url origin`), 인수조건을 테스트로 먼저 고정할 것, PR 제목은 `<Jira 키> <Conventional Commits 제목>`, PR 설명에 Jira · Confluence 링크
 5. **반대 방향 링크** — Confluence 페이지 맨 아래에 `Jira: <키>` 링크를 추가한다.
-6. **Copilot 할당은 묻고 나서** — "Jira 에서 GitHub Copilot 에 할당할까요? (cloud agent 가 바로 작업을 시작하고 크레딧 · Actions 분을 씀)" 라고 묻는다. 사용자가 그러라고 하면 그 작업의 **지정 가능한 담당자** 목록에서 이름이 정확히 `GitHub Copilot` 인 에이전트를 찾아 Assignee 로 바꾼다. `GitHub Copilot for Jira` 는 앱 계정이라 여기에 할당하면 앱이 곧바로 되돌리고 "GitHub Copilot 에 할당하라" 는 코멘트만 남긴다 — 고르지 않는다. 목록에 `GitHub Copilot` 이 없으면(앱 미설치, Jira AI · Rovo 꺼짐, GitHub 조직 미연결) 할당하지 말고, Jira 화면에서 사람이 직접 할당하거나 VS Code 의 Cloud 하네스로 시작하라고 안내한다.
-7. **보고** — 페이지 URL · Jira 키 · URL · 인수조건 개수 · 할당 여부를 표 한 장으로 보여 준다.
+6. **cloud agent 위임 지시문** — Jira 설명의 `## Copilot 작업 지시` 절을 코드 블록 하나로 출력하고, 맨 위 줄에 `Jira: <키> <URL>` 을 붙인다. 그리고 "VS Code 채팅에서 + → 하네스 **Cloud** 새 세션에 이 블록을 붙여 보내면 cloud agent 가 구현을 시작합니다(크레딧 · Actions 분 사용)" 라고 안내한다. Skill 이 직접 위임하거나 Jira 담당자를 바꾸지 않는다 — 구현을 맡길지는 사람이 정한다.
+7. **보고** — 페이지 URL · Jira 키 · URL · 인수조건 개수를 표 한 장으로 보여 주고, 그 아래에 6번의 위임 지시문 블록을 둔다.
 
 ## 규칙
-- 쓰기(페이지 생성 · Jira 생성 · 링크 추가 · 할당)는 한 번에 하나씩 부르고, 승인 카드에 무엇이 들어가는지 사용자가 볼 수 있게 한다.
+- 쓰기(페이지 생성 · Jira 생성 · 링크 추가)는 한 번에 하나씩 부르고, 승인 카드에 무엇이 들어가는지 사용자가 볼 수 있게 한다.
 - 요구사항에 없는 내용(기술 선택, 일정)을 지어내지 않는다. 모호한 곳은 페이지의 "확인 필요" 줄에 적는다.
 - 코드와 저장소 파일은 수정하지 않는다.
