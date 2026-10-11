@@ -1,5 +1,6 @@
 ## 이슈
 Closes #
+Jira: <키> — <Confluence 링크>
 
 ## 변경 요약
 -

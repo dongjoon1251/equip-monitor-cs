@@ -1,0 +1,20 @@
+# Copilot cloud agent 가 작업을 시작하기 전에 도는 준비 단계. 패키지를 미리 복원해 두면 에이전트가 바로 dotnet test 를 돌린다.
+# job 이름은 반드시 copilot-setup-steps 이고, 기본 브랜치(main)에 있어야 쓰인다.
+name: Copilot Setup Steps
+on:
+  workflow_dispatch:
+  push:
+    paths: [.github/workflows/copilot-setup-steps.yml]
+  pull_request:
+    paths: [.github/workflows/copilot-setup-steps.yml]
+jobs:
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - run: dotnet restore

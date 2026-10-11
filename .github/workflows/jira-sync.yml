@@ -1,0 +1,35 @@
+# PR 이 열리면 Jira 를 진행 중으로, 머지되면 '배포 대기' 라벨을 단다. Done 은 jira-deploy.yml 이 CD 성공 뒤에 바꾼다.
+# Jira 키는 PR 제목 · 브랜치 이름 · 설명에서 찾는다.
+name: Jira sync
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review, closed]
+permissions:
+  contents: read
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+      JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+      JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+      PR_TEXT: "${{ github.event.pull_request.title }} ${{ github.event.pull_request.head.ref }} ${{ github.event.pull_request.body }}"
+      PR_URL: ${{ github.event.pull_request.html_url }}
+      ACTION: ${{ github.event.action }}
+      MERGED: ${{ github.event.pull_request.merged }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Jira 에 PR 상태 남기기
+        run: |
+          J=.github/scripts/jira.sh
+          for key in $(bash "$J" keys "$PR_TEXT"); do
+            if [ "$ACTION" = closed ]; then
+              [ "$MERGED" = true ] || continue
+              bash "$J" comment "$key" "머지됨: $PR_URL — 배포 대기 (CD 가 성공하면 자동으로 Done)"
+              bash "$J" label "$key" add deploy-pending
+            else
+              bash "$J" comment "$key" "PR 열림: $PR_URL"
+              bash "$J" move "$key" "In Progress"
+            fi
+            echo "$key 갱신 ($ACTION)"
+          done
