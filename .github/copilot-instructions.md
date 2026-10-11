@@ -25,4 +25,5 @@
 - Jira 작업에서 시작한 일은 PR 제목 맨 앞에 Jira 키를 쓴다(예: `KAN-5 feat: 알람 웹훅 알림`). 설명 `Jira:` 칸에 Jira · Confluence 링크.
 - GitHub 이슈를 닫는 PR 은 설명에 `Closes #N` 을 이슈마다 쓴다.
 - 머지는 사람이 한다. 에이전트는 PR 을 열고 리뷰 · CI 결과를 정리하는 데까지만 한다.
-- Jira 상태는 Actions(`jira-sync.yml` · `jira-deploy.yml`)가 바꾼다. 에이전트가 Jira 를 직접 Done 으로 바꾸지 않는다.
+- 이 저장소는 GitHub Actions 를 쓰지 않는다. CI 는 `scripts/ci.sh`(Windows `scripts/ci.ps1`)와 push 전 git hook 으로, 배포는 `/ship` 으로 이 컴퓨터에서 한다.
+- Jira 상태는 Skill 이 바꾼다: `/jira-implement` → In Progress, `/ship` → Done(배포가 끝났을 때만).

@@ -20,5 +20,5 @@ disable-model-invocation: true
 
 ## 규칙
 - 터미널 명령 · 파일 수정 · Jira 쓰기는 하나씩 실행해 승인 카드에서 사람이 볼 수 있게 한다.
-- push · PR 생성 · 머지는 하지 않는다(머지는 hook 이 막는다). Jira 를 Done 으로 바꾸지 않는다 — Done 은 배포 뒤 Actions 가 바꾼다.
+- push · PR 생성 · 머지는 하지 않는다(머지는 hook 이 막는다). Jira 를 Done 으로 바꾸지 않는다 — Done 은 배포 뒤 `/ship` 이 바꾼다.
 - 인수조건을 만족시키지 못하면 커밋하지 말고 무엇이 막혔는지 보고한다.

@@ -17,7 +17,8 @@ disable-model-invocation: true
 4. **멈추고 승인 받기** — 제목과 설명을 채팅에 보여 주고 "이대로 push 하고 PR 을 만들까요?" 라고 묻는다. 고칠 점을 말하면 반영해 다시 보여 준다. 승인 전에는 push 하지 않는다.
 5. **push** — `git push -u origin <현재 브랜치>`.
 6. **PR 생성** — GitHub MCP 의 PR 생성 도구로 base `main`, head 현재 브랜치, 3번의 제목 · 설명으로 만든다. GitHub MCP 에 PR 생성 도구가 없으면 `gh pr create --base main --title "<제목>" --body-file <임시 파일>` 로 대신한다.
-7. **보고** — PR 번호 · 링크, 그리고 "Actions 의 Jira sync 가 Jira 에 `PR 열림` 을 남기는지 확인하세요" 한 줄.
+7. **Jira 기록** — Atlassian MCP 로 그 Jira 작업에 `PR 열림: <PR 링크>` 코멘트를 남긴다(상태는 그대로 In Progress).
+8. **보고** — PR 번호 · 링크와 Jira 코멘트 결과. push 할 때 로컬 CI(pre-push hook)가 실패하면 PR 을 만들지 말고 실패 내용을 보고한다.
 
 ## 규칙
 - 코드는 수정하지 않는다. 커밋 메시지 · diff 에 없는 내용을 지어내지 않는다.
