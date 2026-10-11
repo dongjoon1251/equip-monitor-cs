@@ -19,7 +19,7 @@ description: 요구사항을 Confluence 요구사항 페이지로 쓰거나 기�
    - 인수조건: 페이지의 체크박스를 그대로 옮긴다
    - `## Copilot 작업 지시` 절: 저장소 `<owner>/<repo>` (현재 작업 폴더의 `git remote get-url origin`), 인수조건을 테스트로 먼저 고정할 것, PR 제목은 `<Jira 키> <Conventional Commits 제목>`, PR 설명에 Jira · Confluence 링크
 5. **반대 방향 링크** — Confluence 페이지 맨 아래에 `Jira: <키>` 링크를 추가한다.
-6. **Copilot 할당은 묻고 나서** — "Jira 에서 GitHub Copilot 에 할당할까요? (cloud agent 가 바로 작업을 시작하고 크레딧 · Actions 분을 씀)" 라고 묻는다. 사용자가 그러라고 하면 Assignee 를 `GitHub Copilot` 으로 바꾼다. 그 사용자를 찾을 수 없으면 Jira 사이트에 GitHub Copilot for Jira 앱이 없는 것이니, 할당하지 말고 그 사실만 보고한다.
+6. **Copilot 할당은 묻고 나서** — "Jira 에서 GitHub Copilot 에 할당할까요? (cloud agent 가 바로 작업을 시작하고 크레딧 · Actions 분을 씀)" 라고 묻는다. 사용자가 그러라고 하면 그 작업의 **지정 가능한 담당자** 목록에서 이름이 정확히 `GitHub Copilot` 인 에이전트를 찾아 Assignee 로 바꾼다. `GitHub Copilot for Jira` 는 앱 계정이라 여기에 할당하면 앱이 곧바로 되돌리고 "GitHub Copilot 에 할당하라" 는 코멘트만 남긴다 — 고르지 않는다. 목록에 `GitHub Copilot` 이 없으면(앱 미설치, Jira AI · Rovo 꺼짐, GitHub 조직 미연결) 할당하지 말고, Jira 화면에서 사람이 직접 할당하거나 VS Code 의 Cloud 하네스로 시작하라고 안내한다.
 7. **보고** — 페이지 URL · Jira 키 · URL · 인수조건 개수 · 할당 여부를 표 한 장으로 보여 준다.
 
 ## 규칙
