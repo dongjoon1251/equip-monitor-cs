@@ -26,7 +26,9 @@ jobs:
           J=.github/scripts/jira.sh
           JQL="labels = deploy-pending AND statusCategory != Done"
           [ -n "$JIRA_PROJECT" ] && JQL="$JQL AND project = $JIRA_PROJECT"
-          for key in $(bash "$J" search "$JQL"); do
+          keys=$(bash "$J" search "$JQL")   # 접근 실패면 여기서 스텝이 실패한다
+          [ -n "$keys" ] || echo "deploy-pending 라벨이 붙은 작업 없음 — 바꿀 것 없음"
+          for key in $keys; do
             bash "$J" comment "$key" "배포 완료: ghcr.io/${GITHUB_REPOSITORY,,}:$SHA ($RUN_URL)"
             bash "$J" move "$key" "Done"
             bash "$J" label "$key" remove deploy-pending

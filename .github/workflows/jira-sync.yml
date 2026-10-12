@@ -22,7 +22,9 @@ jobs:
       - name: Jira 에 PR 상태 남기기
         run: |
           J=.github/scripts/jira.sh
-          for key in $(bash "$J" keys "$PR_TEXT"); do
+          keys=$(bash "$J" keys "$PR_TEXT")   # 접근 실패면 여기서 스텝이 실패한다
+          [ -n "$keys" ] || echo "::warning::PR 제목 · 브랜치 · 설명에서 Jira 키를 찾지 못해 Jira 를 바꾸지 않음"
+          for key in $keys; do
             if [ "$ACTION" = closed ]; then
               [ "$MERGED" = true ] || continue
               bash "$J" comment "$key" "머지됨: $PR_URL — 배포 대기 (CD 가 성공하면 자동으로 Done)"
