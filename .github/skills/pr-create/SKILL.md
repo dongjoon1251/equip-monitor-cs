@@ -10,7 +10,7 @@ disable-model-invocation: true
 2. **Jira 키** — 브랜치 이름 `feat/<Jira 키>` 에서 키를 찾는다(없으면 커밋 메시지에서, 그래도 없으면 한 번 묻는다). Atlassian MCP 로 그 작업의 제목과 Confluence 링크를 읽는다.
 3. **초안** — `.github/pull_request_template.md` 의 칸을 그대로 채운다.
    - 제목: `<Jira 키> <Conventional Commits 한 줄>` (예: `KAN-5 feat: 알람 웹훅 알림`)
-   - 이슈: 커밋 메시지에 나온 GitHub 이슈마다 `Closes #N` 한 줄씩
+   - 이슈: 커밋 메시지에 나온 GitHub 이슈 중 **아직 열려 있는 것**마다 `Closes #N` 한 줄씩 (GitHub MCP 로 상태 확인 — 이미 닫힌 이슈는 넣지 않는다)
    - Jira: `<키> — <Jira URL>`, Confluence 링크
    - 변경 요약: "무엇을 · 왜" 3줄 이내, 파일 나열 금지
    - 테스트 방법: 실제로 실행한 명령과 결과만. 실행하지 않은 것은 "미실행"
