@@ -1,10 +1,10 @@
 ---
 name: req-to-jira
-description: 요구사항을 Confluence 요구사항 페이지로 쓰거나 기존 페이지를 읽고, 요구사항 글이면 Jira 작업을 만들어 양방향으로 링크한다. "/req-to-jira <요구사항 또는 페이지 제목>" 으로 실행하고, Confluence 에 요구사항을 써 달라는 요청에도 쓴다. "--copilot" 을 붙이면 마지막에 Jira 작업을 GitHub Copilot 에게 맡긴다.
+description: 요구사항을 Confluence 요구사항 페이지로 쓰거나 기존 페이지를 읽고, 요구사항 글이면 Jira 작업을 만들어 양방향으로 링크한다. "/req-to-jira <요구사항 또는 페이지 제목>" 으로 실행하고, Confluence 에 요구사항을 써 달라는 요청에도 쓴다.
 ---
 # Confluence 요구사항 → Jira 작업
 
-입력은 둘 중 하나다. 앞에 `--copilot` 이 있으면 떼어 두고 6번에서 쓴다.
+입력은 둘 중 하나다.
 - **새 요구사항 문장** → 1번부터
 - **기존 Confluence 페이지 제목 · URL**, 또는 "스페이스 훑기" → 2번부터
 
@@ -19,10 +19,8 @@ description: 요구사항을 Confluence 요구사항 페이지로 쓰거나 기�
    - 인수조건: 페이지의 체크박스를 그대로 옮긴다
    - `## Copilot 작업 지시` 절(`/jira-implement` 가 읽음): 저장소 `<owner>/<repo>` (현재 작업 폴더의 `git remote get-url origin`), 인수조건을 테스트로 먼저 고정할 것, PR 제목은 `<Jira 키> <Conventional Commits 제목>`, PR 설명에 Jira · Confluence 링크
 5. **반대 방향 링크** — Confluence 페이지 맨 아래에 `Jira: <키>` 링크를 추가한다.
-6. **다음 단계** — 구현은 이 Skill 이 하지 않는다.
-   - `--copilot` 이 있으면: `.github/skills/jira-to-copilot/SKILL.md` 를 읽고 그 절차로 이 Jira 작업을 GitHub Copilot 에게 맡긴다(승인 카드 포함).
-   - 없으면: 결과 끝에 "구현: `/jira-implement <Jira 키>` (feat/<Jira 키> 브랜치 · Jira 진행 중 · 테스트 먼저 · 커밋) — 또는 Copilot 에게 맡기기: `/jira-to-copilot <Jira 키>`" 한 줄을 붙인다.
-7. **보고** — 페이지 URL · Jira 키 · URL · 인수조건 개수(· `--copilot` 이면 담당자)를 표 한 장으로 보여 주고, 그 아래에 6번의 다음 단계 한 줄을 둔다.
+6. **다음 단계 안내** — 구현은 이 Skill 이 하지 않는다. 결과 끝에 "구현: `/jira-implement <Jira 키>` (feat/<Jira 키> 브랜치 · Jira 진행 중 · 테스트 먼저 · 커밋)" 한 줄을 붙인다.
+7. **보고** — 페이지 URL · Jira 키 · URL · 인수조건 개수를 표 한 장으로 보여 주고, 그 아래에 6번의 다음 단계 한 줄을 둔다.
 
 ## 규칙
 - 쓰기(페이지 생성 · Jira 생성 · 링크 추가)는 한 번에 하나씩 부르고, 승인 카드에 무엇이 들어가는지 사용자가 볼 수 있게 한다.
