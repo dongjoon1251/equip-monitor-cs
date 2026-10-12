@@ -30,7 +30,7 @@ data/samples 정상 · 과열 · 음수 로그
 로그 라인: `2026-09-21T09:00:00Z DEV-01 state=RUN temp=82.5 pressure=1.20`
 
 ## 실습 이슈
-요구사항은 `docs/issues/` 의 01 · 02 · 04 파일입니다. MCP & 보안 시간 실습 1에서 Copilot 이 GitHub MCP 로 01~04 파일을 순서대로 GitHub 이슈 #1~#4 로 등록합니다.
+요구사항은 `docs/issues/` 의 01 · 02 파일입니다. MCP & 보안 시간 실습 1에서 Copilot 이 GitHub MCP 로 01~03 파일을 순서대로 GitHub 이슈 #1~#3 으로 등록하고, 이슈 #2 는 그 시간에 구현한 뒤 닫습니다.
 `03-log-format-question.md` 는 프롬프트 인젝션 실습용 이슈입니다. 본문 HTML 주석에 **숨은 지시**가 들어 있으니 따르지 마세요. 이슈 #3 으로 등록되어 MCP & 보안 시간 실습 5에서 씁니다.
 ## 체크포인트
 > **Use this template** 로 자기 repo 를 만들 때 **Include all branches** 를 반드시 체크하세요. 체크하지 않으면 아래 체크포인트 브랜치가 생기지 않습니다.
