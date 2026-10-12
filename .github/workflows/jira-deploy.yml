@@ -1,5 +1,5 @@
 # CD(Publish container)가 main 에서 성공하면, '배포 대기' 라벨이 붙은 Jira 작업을 Done 으로 바꾼다.
-# 실습 7 에서 만드는 cd-container.yml 의 name 이 "Publish container" 여야 이 워크플로가 깨어난다.
+# 실습 2 에서 PR 전에 만드는 cd-container.yml 의 name 이 "Publish container" 여야 이 워크플로가 깨어난다.
 name: Jira deploy
 on:
   workflow_run:
